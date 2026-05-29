@@ -1,1 +1,26 @@
+# Environment
 .env
+.env.*
+
+# .NET build outputs
+bin/
+obj/
+
+# EF Core migrations snapshot artifacts
+*.db-shm
+*.db-wal
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+# NuGet
+*.nupkg
+.nuget/
+
+# OS
+.DS_Store
+Thumbs.db
