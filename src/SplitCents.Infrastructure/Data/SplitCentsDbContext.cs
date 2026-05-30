@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 public class SplitCentsDbContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql("gabrgopaebgb");
-    }
+    public SplitCentsDbContext(DbContextOptions<SplitCentsDbContext> options)
+        : base(options) { }
 }
