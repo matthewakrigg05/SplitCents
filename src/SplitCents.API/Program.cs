@@ -1,5 +1,6 @@
 namespace SplitCents.API;
-using SplitCents.Infrastructure.Data;
+using SplitCents.Infrastructure;
+using SplitCents.Core;
 using Microsoft.EntityFrameworkCore;
 
 public class Program
@@ -8,8 +9,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddDbContext<SplitCentsDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddInfrastructure(builder.Configuration);
+        builder.Services.AddCore();
 
         var app = builder.Build();
 

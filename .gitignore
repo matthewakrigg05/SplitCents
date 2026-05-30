@@ -1,6 +1,7 @@
 # Environment
 .env
 .env.*
+appsettings.Development.json
 
 # .NET build outputs
 bin/
