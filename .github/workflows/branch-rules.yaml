@@ -27,8 +27,8 @@ jobs:
 
           # dev rules
           if [[ "$BASE" == "dev" ]]; then
-            if [[ ! "$HEAD" =~ ^feature/ && ! "$HEAD" =~ ^hotfix/ ]]; then
-              echo "Only feature/* or hotfix/* can merge into dev"
+            if [[ ! "$HEAD" =~ ^feature/ && ! "$HEAD" =~ ^hotfix/ && ! "$HEAD" =~ ^test/ ]]; then
+              echo "Only feature/*, hotfix/*, or test/* can merge into dev"
               exit 1
             fi
           fi
