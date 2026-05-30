@@ -22,4 +22,3 @@ I have been having conversations with tools such as Copilot and ChatGPT to iron 
 features may be worth considering, alongside what I have already. I also use AI to help draft some of the larger bits of documentation for
 this project - because who really likes writing that!? I do however spend a lot of time reading through it, amending it and removing 
 parts that are unrelated or make no sense to me.
-
