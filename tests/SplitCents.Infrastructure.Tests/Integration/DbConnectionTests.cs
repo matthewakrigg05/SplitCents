@@ -1,5 +1,5 @@
 namespace SplitCents.Infrastructure.Tests.Integration;
-
+using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using SplitCents.Infrastructure.Data;
 using FluentAssertions;
@@ -11,8 +11,12 @@ public class DbConnectionTests : IDisposable
 
     public DbConnectionTests()
     {
+        var config = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.Development.json", optional: false)
+        .Build();
+
         var options = new DbContextOptionsBuilder<SplitCentsDbContext>()
-            .UseNpgsql("Host=localhost;Database=SpltCntsDev;Username=SplitCentsApplication;Password=splitcentsdev")
+            .UseNpgsql(config.GetConnectionString("DefaultConnection"))
             .Options;
 
         _db = new SplitCentsDbContext(options);
