@@ -38,7 +38,6 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    // Account management
     public Task DeleteAccountAsync(Guid userId)
     {
         throw new NotImplementedException();
