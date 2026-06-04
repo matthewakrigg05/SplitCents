@@ -4,7 +4,7 @@ using SplitCents.Core.Models;
 public interface IUserService
 {
     // Reg & Retrieval
-    Task<User> RegisterAsync(string email, string password, string displayName);
+    Task<User> RegisterAsync(string email, string password, string displayName, string? firstName, string? lastName);
     Task<User?> GetUserByIdAsync(Guid id);
 
     // Profile updates
