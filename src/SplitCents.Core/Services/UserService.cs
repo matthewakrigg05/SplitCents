@@ -1,7 +1,7 @@
 namespace SplitCents.Core.Services;
 
 using System.ComponentModel.DataAnnotations;
-using System.Data.Common;
+using SplitCents.Core.DTOs;
 using SplitCents.Core.Interfaces.Repositories;
 using SplitCents.Core.Interfaces.Services;
 using SplitCents.Core.Models;
@@ -19,7 +19,7 @@ public class UserService : IUserService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<User> RegisterAsync(string email, string password, string displayName, string? firstName, string? lastName)
+    public async Task<UserResponse> RegisterAsync(string email, string password, string displayName, string? firstName, string? lastName)
     {
         UserValidator.ValidateEmail(email);
         UserValidator.ValidateDisplayName(displayName);
@@ -36,7 +36,7 @@ public class UserService : IUserService
         User userToReg = new User
             {
                 id = Guid.NewGuid(),
-                email = email, 
+                email = email.ToLowerInvariant(), 
                 hashedPassword = hashedPassword, 
                 displayName = displayName, 
                 firstName = firstName ?? string.Empty, 
@@ -44,7 +44,15 @@ public class UserService : IUserService
             };
 
         await _users.AddAsync(userToReg);
-        return userToReg;
+        
+        return new UserResponse
+            {
+                id = userToReg.id,
+                email = userToReg.email,
+                displayName = userToReg.displayName,
+                firstName = userToReg.firstName,
+                lastName = userToReg.lastName
+            };
     }
 
     public Task<User?> GetUserByIdAsync(Guid id)
