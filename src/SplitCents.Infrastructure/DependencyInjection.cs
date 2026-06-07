@@ -15,6 +15,8 @@ using SplitCents.Infrastructure.Data;
 // Repository interface (defined in Core) and its implementation (defined here)
 using SplitCents.Core.Interfaces.Repositories;
 using SplitCents.Infrastructure.Repositories;
+using SplitCents.Core.Models.Security;
+using SplitCents.Infrastructure.Security;
 
 public static class DependencyInjection
 {
@@ -28,6 +30,7 @@ public static class DependencyInjection
         // When IUserRepository is requested, provide a UserRepository instance
         // Scoped = one instance per HTTP request
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         return services;
     }
