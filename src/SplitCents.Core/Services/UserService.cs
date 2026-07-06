@@ -1,7 +1,7 @@
 namespace SplitCents.Core.Services;
 
-using System.ComponentModel.DataAnnotations;
 using SplitCents.Core.DTOs;
+using SplitCents.Core.Exceptions;
 using SplitCents.Core.Interfaces.Repositories;
 using SplitCents.Core.Interfaces.Services;
 using SplitCents.Core.Models;
@@ -25,59 +25,94 @@ public class UserService : IUserService
         UserValidator.ValidateDisplayName(displayName);
         UserValidator.ValidatePassword(password);
         
-        if (await _users.GetByEmailAsync(email) != null)
+        var normalizedEmail = email.ToLowerInvariant();
+
+        if (await _users.GetByEmailAsync(normalizedEmail) != null)
             throw new ValidationException("Email is already in use.");
 
         if (await _users.GetByDisplayNameAsync(displayName) != null)
             throw new ValidationException("Display name is already in use.");
-        
+
         var hashedPassword = _passwordHasher.HashPassword(password);
 
-        User userToReg = new User
-            {
-                id = Guid.NewGuid(),
-                email = email.ToLowerInvariant(), 
-                hashedPassword = hashedPassword, 
-                displayName = displayName, 
-                firstName = firstName ?? string.Empty, 
-                lastName = lastName ?? string.Empty
-            };
+        var userToReg = new User
+        {
+            id = Guid.NewGuid(),
+            email = normalizedEmail,
+            hashedPassword = hashedPassword,
+            displayName = displayName,
+            firstName = firstName ?? string.Empty,
+            lastName = lastName ?? string.Empty
+        };
 
         await _users.AddAsync(userToReg);
-        
+
         return new UserResponse
-            {
-                id = userToReg.id,
-                email = userToReg.email,
-                displayName = userToReg.displayName,
-                firstName = userToReg.firstName,
-                lastName = userToReg.lastName
-            };
+        {
+            id = userToReg.id,
+            email = userToReg.email,
+            displayName = userToReg.displayName,
+            firstName = userToReg.firstName,
+            lastName = userToReg.lastName
+        };
     }
 
-    public Task<User?> GetUserByIdAsync(Guid id)
+    public async Task<User?> GetUserByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _users.GetByIdAsync(id);
     }
 
-    // Profile updates
-    public Task UpdateDisplayNameAsync(Guid userId, string newDisplayName)
+    public async Task UpdateDisplayNameAsync(Guid userId, string newDisplayName)
     {
-        throw new NotImplementedException();
+        UserValidator.ValidateDisplayName(newDisplayName);
+
+        var user = await _users.GetByIdAsync(userId)
+            ?? throw new NotFoundException($"User with id '{userId}' was not found.");
+
+        var existing = await _users.GetByDisplayNameAsync(newDisplayName);
+        if (existing != null && existing.id != userId)
+            throw new ValidationException("Display name is already in use.");
+
+        user.displayName = newDisplayName;
+        await _users.UpdateAsync(user);
     }
 
-    public Task UpdateEmailAsync(Guid userId, string newEmail)
+    public async Task UpdateEmailAsync(Guid userId, string newEmail)
     {
-        throw new NotImplementedException();
+        UserValidator.ValidateEmail(newEmail);
+
+        var user = await _users.GetByIdAsync(userId)
+            ?? throw new NotFoundException($"User with id '{userId}' was not found.");
+
+        var normalizedEmail = newEmail.ToLowerInvariant();
+
+        var existing = await _users.GetByEmailAsync(normalizedEmail);
+        if (existing != null && existing.id != userId)
+            throw new ValidationException("Email is already in use.");
+
+        user.email = normalizedEmail;
+        await _users.UpdateAsync(user);
     }
 
-    public Task UpdatePasswordAsync(Guid userId, string currentPassword, string newPassword)
+    public async Task UpdatePasswordAsync(Guid userId, string currentPassword, string newPassword)
     {
-        throw new NotImplementedException();
+        var user = await _users.GetByIdAsync(userId)
+            ?? throw new NotFoundException($"User with id '{userId}' was not found.");
+
+        if (!_passwordHasher.VerifyPassword(currentPassword, user.hashedPassword))
+            throw new ValidationException("Current password is incorrect.");
+
+        UserValidator.ValidatePassword(newPassword);
+
+        user.hashedPassword = _passwordHasher.HashPassword(newPassword);
+        await _users.UpdateAsync(user);
     }
 
-    public Task DeleteAccountAsync(Guid userId)
+    public async Task DeleteAccountAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        var user = await _users.GetByIdAsync(userId)
+            ?? throw new NotFoundException($"User with id '{userId}' was not found.");
+
+        await _users.DeleteAsync(user);
     }
 }
