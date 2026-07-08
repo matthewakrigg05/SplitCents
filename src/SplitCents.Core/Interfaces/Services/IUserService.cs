@@ -6,6 +6,7 @@ public interface IUserService
 {
     // Reg & Retrieval
     Task<UserResponse> RegisterAsync(string email, string password, string displayName, string? firstName, string? lastName);
+    Task<UserResponse> LoginAsync(string email, string password);
     Task<User?> GetUserByIdAsync(Guid id);
 
     // Profile updates

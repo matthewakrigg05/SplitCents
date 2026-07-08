@@ -34,4 +34,12 @@ public class UsersController : ControllerBase
             $"/api/users/{user.id}",
             new RegisterResponse { User = user, Token = token });
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        var user = await _userService.LoginAsync(request.Email, request.Password);
+        var token = _jwtTokenService.GenerateToken(user);
+        return Ok(new LoginResponse { User = user, Token = token });
+    }
 }

@@ -57,6 +57,26 @@ public class UserService : IUserService
         };
     }
 
+    public async Task<UserResponse> LoginAsync(string email, string password)
+    {
+        var normalizedEmail = email.ToLowerInvariant();
+
+        var user = await _users.GetByEmailAsync(normalizedEmail)
+            ?? throw new ValidationException("Invalid email or password.");
+
+        if (!_passwordHasher.VerifyPassword(password, user.hashedPassword))
+            throw new ValidationException("Invalid email or password.");
+
+        return new UserResponse
+        {
+            id = user.id,
+            email = user.email,
+            displayName = user.displayName,
+            firstName = user.firstName,
+            lastName = user.lastName
+        };
+    }
+
     public async Task<User?> GetUserByIdAsync(Guid id)
     {
         return await _users.GetByIdAsync(id);
