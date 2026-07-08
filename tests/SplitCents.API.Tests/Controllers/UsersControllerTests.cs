@@ -213,4 +213,80 @@ public class UsersControllerTests : IDisposable
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
+
+    [Fact]
+    public async Task Login_WithValidCredentials_Returns200WithTokenAndUser()
+    {
+        await _client.PostAsJsonAsync("/api/users/register", new RegisterRequest
+        {
+            Email = "loginuser@example.com",
+            Password = "Secure@99",
+            DisplayName = "loginuser"
+        });
+
+        var response = await _client.PostAsJsonAsync("/api/users/login", new LoginRequest
+        {
+            Email = "loginuser@example.com",
+            Password = "Secure@99"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var body = await response.Content.ReadFromJsonAsync<LoginResponse>();
+        body.Should().NotBeNull();
+        body!.Token.Should().NotBeNullOrWhiteSpace();
+        body.User.email.Should().Be("loginuser@example.com");
+        body.User.displayName.Should().Be("loginuser");
+    }
+
+    [Fact]
+    public async Task Login_WithWrongPassword_Returns400()
+    {
+        await _client.PostAsJsonAsync("/api/users/register", new RegisterRequest
+        {
+            Email = "wrongpass@example.com",
+            Password = "Secure@99",
+            DisplayName = "wrongpassuser"
+        });
+
+        var response = await _client.PostAsJsonAsync("/api/users/login", new LoginRequest
+        {
+            Email = "wrongpass@example.com",
+            Password = "WrongPassword@1"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Login_WithUnknownEmail_Returns400()
+    {
+        var response = await _client.PostAsJsonAsync("/api/users/login", new LoginRequest
+        {
+            Email = "nobody@example.com",
+            Password = "Secure@99"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Login_WhenServiceThrowsValidationException_Returns400WithErrorBody()
+    {
+        var mock = new Mock<IUserService>();
+        mock.Setup(s => s.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
+            .ThrowsAsync(new ValidationException("Invalid email or password."));
+
+        using var factory = new MockUserServiceFactory(mock);
+        using var client = factory.CreateClient();
+
+        var response = await client.PostAsJsonAsync("/api/users/login", new LoginRequest
+        {
+            Email = "someone@example.com",
+            Password = "Secure@99"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var body = await response.Content.ReadAsStringAsync();
+        body.Should().Contain("Invalid email or password.");
+    }
 }
