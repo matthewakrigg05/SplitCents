@@ -1,6 +1,8 @@
 namespace SplitCents.Infrastructure.Data;
-using SplitCents.Core.Models;
+
 using Microsoft.EntityFrameworkCore;
+using SplitCents.Core.Models;
+using SplitCents.Infrastructure.Data.Configurations;
 
 public class SplitCentsDbContext : DbContext
 {
@@ -8,4 +10,9 @@ public class SplitCentsDbContext : DbContext
         : base(options) { }
 
     public DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+    }
 }
