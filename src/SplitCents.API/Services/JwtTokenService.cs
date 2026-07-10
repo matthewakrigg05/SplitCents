@@ -25,9 +25,10 @@ public class JwtTokenService : IJwtTokenService
             new Claim(JwtRegisteredClaimNames.Sub, user.id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.email),
             new Claim("displayName", user.displayName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // unique token ID, useful for future revocation
         };
 
+        // Falls back to 1 hour if not specified in configuration.
         var expiryHours = Convert.ToDouble(_config["Jwt:ExpiryHours"] ?? "1");
 
         var token = new JwtSecurityToken(

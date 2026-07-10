@@ -217,6 +217,7 @@ public class UsersControllerTests : IDisposable
     [Fact]
     public async Task Login_WithValidCredentials_Returns200WithTokenAndUser()
     {
+        // Register a user first so there is a known account to authenticate against.
         await _client.PostAsJsonAsync("/api/users/register", new RegisterRequest
         {
             Email = "loginuser@example.com",

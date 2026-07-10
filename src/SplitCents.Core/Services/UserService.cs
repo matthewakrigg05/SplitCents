@@ -61,6 +61,8 @@ public class UserService : IUserService
     {
         var normalizedEmail = email.ToLowerInvariant();
 
+        // Both failure cases return the same message to prevent user enumeration
+        // (i.e. an attacker cannot tell whether the email exists).
         var user = await _users.GetByEmailAsync(normalizedEmail)
             ?? throw new ValidationException("Invalid email or password.");
 
