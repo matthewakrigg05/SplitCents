@@ -25,6 +25,7 @@ public class UserService : IUserService
         UserValidator.ValidateDisplayName(displayName);
         UserValidator.ValidatePassword(password);
         
+        // Normalise before uniqueness checks and storage so email matching is case-insensitive.
         var normalizedEmail = email.ToLowerInvariant();
 
         if (await _users.GetByEmailAsync(normalizedEmail) != null)

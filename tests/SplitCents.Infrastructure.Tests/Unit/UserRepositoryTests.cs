@@ -14,6 +14,7 @@ public class UserRepositoryTests : IDisposable
 
     public UserRepositoryTests()
     {
+        // Unique DB name per test instance ensures each test runs in complete isolation.
         var options = new DbContextOptionsBuilder<SplitCentsDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;

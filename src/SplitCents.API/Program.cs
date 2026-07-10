@@ -41,7 +41,9 @@ public class Program
 
         var app = builder.Build();
 
+        // ExceptionMiddleware must be first so it catches exceptions from all subsequent middleware.
         app.UseMiddleware<ExceptionMiddleware>();
+        // UseAuthentication must come before UseAuthorization.
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();

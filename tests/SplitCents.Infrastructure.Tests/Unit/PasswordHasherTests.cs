@@ -32,6 +32,7 @@ public class PasswordHasherTests
     [Fact]
     public void HashPassword_TwiceForSamePassword_ProducesDifferentHashes()
     {
+        // BCrypt generates a new random salt on every call, so identical passwords never produce the same hash.
         var hash1 = _sut.HashPassword("MyPass@99");
         var hash2 = _sut.HashPassword("MyPass@99");
         hash1.Should().NotBe(hash2);

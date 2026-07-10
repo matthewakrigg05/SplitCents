@@ -20,14 +20,11 @@ using SplitCents.Infrastructure.Security;
 
 public static class DependencyInjection
 {
-    // Extension method on IServiceCollection so Program.cs can call builder.Services.AddInfrastructure(...)
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-        // Register EF Core with Postgres using the connection string from appsettings.json
         services.AddDbContext<SplitCentsDbContext>(options =>
             options.UseNpgsql(config.GetConnectionString("DefaultConnection")));
 
-        // When IUserRepository is requested, provide a UserRepository instance
         // Scoped = one instance per HTTP request
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();

@@ -32,6 +32,8 @@ public static class UserValidator
         try
         {
             var addr = new MailAddress(email);
+            // MailAddress accepts formats like `"Name" <user@example.com>` and rewrites the address.
+            // This check ensures only a plain address was provided.
             if (addr.Address != email)
                 throw new ValidationException("Email is not a valid format.");
         }

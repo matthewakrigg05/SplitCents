@@ -12,7 +12,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.email)
             .IsRequired()
-            .HasMaxLength(254);
+            .HasMaxLength(254); // RFC 5321 maximum length
         builder.HasIndex(u => u.email)
             .IsUnique();
 
@@ -20,7 +20,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(30);
         builder.HasIndex(u => u.displayName)
-            .IsUnique();
+            .IsUnique(); // DB-level safety net beyond the service-layer uniqueness checks
 
         builder.Property(u => u.hashedPassword)
             .IsRequired();
