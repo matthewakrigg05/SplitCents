@@ -1,8 +1,30 @@
-Think a bit more about this project
+# SplitCents TODO
 
-What is its progression?
+## Project direction
+- Keep the initial focus on a standalone personal budgeting app for solo users.
+- Treat shared or collaborative features as a later phase rather than part of the MVP.
 
-What is the MVP?
+## MVP scope
+- Define and lock the MVP around income tracking, recurring bills, budget planning, savings goals, and a simple monthly overview.
+- Keep bill frequencies simple at first: monthly by default, with support for weekly and annual bills.
+- Prioritize a clean, usable workflow over advanced forecasting or bank integrations.
 
-Start with a standalone budgeting app - then add sharing capability?
+## Implementation backlog
+- [ ] Finalize the MVP scope and success criteria.
+- [ ] Set up the solution structure and baseline architecture for API, core, and infrastructure layers.
+- [ ] Implement user registration, authentication, and basic user management.
+- [ ] Add income entry and recurring bill management.
+- [ ] Add budget categories and monthly planning features.
+- [ ] Add savings goals and progress tracking.
+- [ ] Build the dashboard/summary experience and basic reminders.
+- [ ] Add testing, validation, and release preparation.
+
+## Planning and project management
+- [ ] Choose and set up appropriate planning/project management software (for example Jira, Azure DevOps, Trello, Linear, or Notion).
+- [ ] Create a backlog, sprint board, and workflow columns for backlog, planned, in progress, review, and done.
+- [ ] Break the MVP into manageable tickets and assign priorities.
+
+## Notes
+- Use the implementation plan and capability documents as the main source of truth for scope and priorities.
+- Revisit the roadmap after the MVP is released to decide whether to add sharing, forecasting, or account integrations.
 
