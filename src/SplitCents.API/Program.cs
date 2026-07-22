@@ -43,6 +43,8 @@ public class Program
 
         // ExceptionMiddleware must be first so it catches exceptions from all subsequent middleware.
         app.UseMiddleware<ExceptionMiddleware>();
+        app.UseStaticFiles();
+
         // UseAuthentication must come before UseAuthorization.
         app.UseAuthentication();
         app.UseAuthorization();
