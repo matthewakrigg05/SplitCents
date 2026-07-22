@@ -9,13 +9,14 @@ Watch this space!
 
 ### AI Statement
 
-I wish to declare how AI features in this project! I will be using generative AI, primarily through GitHub Copilot to complete much of 
+I wish to declare how AI features in this project! I will be using generative AI, primarily through GitHub Copilot to complete most of 
 the frontend development work; this is because frontend development is not something that I am massively interested in learning, and so
-find it a better use of time to use generative tools to complete this area of my project.
+find it a better use of time to use generative tools to complete this area of my project. 
 
-On the other hand, all database and backend related work, as well as the containerisation using docker, and the hosting of these elements
-during development, are all developed manually. The old fashioned way. I have a great interest in backend development, system 
-architecture and infrastructure, which I am using this project as a means of learning more about. 
+On the other hand, the majority of database and backend related work, as well as the containerisation using docker, and the hosting of 
+these elements during development, are programmed by hand. I have a great interest in backend development, system architecture and 
+infrastructure, which I am using this project as a means of learning more about. Some of the initial building of models was complete
+using copilot, once I had written a few, and could use them as a template for my agent to use as references.  
 
 Another use of AI in this project is in the planning phases. Whilst the idea is my own, and inspired by an application I use already,
 I have been having conversations with tools such as Copilot and ChatGPT to iron out how I want to develop the project, and what 
