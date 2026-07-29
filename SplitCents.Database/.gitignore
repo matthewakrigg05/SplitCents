@@ -1,0 +1,11 @@
+# Ignore generated database artifacts
+*.bak
+*.trn
+*.ldf
+*.mdf
+*.ndf
+*.log
+*.tmp
+*.sqlproj.user
+*.suo
+.vs/
