@@ -19,3 +19,5 @@ The database is intentionally kept separate from the main application source so 
 ## Current schema
 
 - `scripts/create/01_create_users_table.sql` - creates the initial `Users` table based on the current Core model.
+
+These migration files are draft SQL for a PostgreSQL-oriented schema and are intended to be refined as the domain model becomes more explicit.
