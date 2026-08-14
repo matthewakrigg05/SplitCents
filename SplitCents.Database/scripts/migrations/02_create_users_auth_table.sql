@@ -14,9 +14,9 @@ A foreign key ensures every auth record references a valid user.
 
 CREATE TABLE [dbo].[UserAuth]
 (
-    [userId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    [userId] UNIQUEIDENTIFIER NOT NULL,
     [hashedPassword] NVARCHAR(MAX) NOT NULL,
-
-    CONSTRAINT [FK_UserAuth_Users] FOREIGN KEY ([userId]) REFERENCES [dbo].[Users]([id])
+    CONSTRAINT [PK_UserAuth] PRIMARY KEY CLUSTERED ([userId]),
+    CONSTRAINT [FK_UserAuth_UserId_Users_Id] FOREIGN KEY ([userId]) REFERENCES [dbo].[Users]([id])
         ON DELETE CASCADE
 );

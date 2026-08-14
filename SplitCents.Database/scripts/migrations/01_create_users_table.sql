@@ -13,11 +13,12 @@ from authentication-related data.
 
 CREATE TABLE [dbo].[Users]
 (
-    [id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-    [email] NVARCHAR(254) NOT NULL UNIQUE,
-    [displayName] NVARCHAR(30) NOT NULL UNIQUE,
+    [id] UNIQUEIDENTIFIER NOT NULL,
+    [email] NVARCHAR(254) NOT NULL,
+    [displayName] NVARCHAR(30) NOT NULL,
     [firstName] NVARCHAR(100) NOT NULL DEFAULT N'',
-    [lastName] NVARCHAR(100) NOT NULL DEFAULT N''
+    [lastName] NVARCHAR(100) NOT NULL DEFAULT N'',
+    CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([id])
 );
 
 CREATE UNIQUE INDEX [IX_Users_Email] ON [dbo].[Users] ([email]);
