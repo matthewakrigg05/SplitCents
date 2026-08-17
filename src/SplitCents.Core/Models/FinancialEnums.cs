@@ -11,7 +11,8 @@ public enum SubscriptionStatus
 {
     Active = 0,
     Cancelled = 1,
-    Paused = 2
+    Paused = 2,
+    Skipped = 3
 }
 
 public enum TransactionType
