@@ -10,17 +10,17 @@ public class SplitCentsDbContext : DbContext
         : base(options) { }
 
     public DbSet<User> Users { get; set; }
-    public DbSet<Bill> Bills { get; set; }
-    public DbSet<RecurringSubscription> RecurringSubscriptions { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
-    public DbSet<BudgetCategory> BudgetCategories { get; set; }
+    public DbSet<RecurringTransaction> RecurringTransactions { get; set; }
+    public DbSet<TransactionCategory> TransactionCategories { get; set; }
+    public DbSet<UserTransactionCategory> UserTransactionCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());
-        modelBuilder.ApplyConfiguration(new BillConfiguration());
-        modelBuilder.ApplyConfiguration(new RecurringSubscriptionConfiguration());
         modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-        modelBuilder.ApplyConfiguration(new BudgetCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new RecurringTransactionConfiguration());
+        modelBuilder.ApplyConfiguration(new TransactionCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new UserTransactionCategoryConfiguration());
     }
 }

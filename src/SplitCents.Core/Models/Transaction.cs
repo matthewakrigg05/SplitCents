@@ -8,11 +8,9 @@ public class Transaction
     public decimal amount { get; set; }
     public TransactionType type { get; set; }
     public DateTime transactionDate { get; set; }
-    public string category { get; set; } = string.Empty;
+    public Guid? categoryId { get; set; }
     public string notes { get; set; } = string.Empty;
     public bool isPlanned { get; set; }
-    public Guid? billId { get; set; }
-    public Guid? subscriptionId { get; set; }
     public DateTime createdAt { get; set; } = DateTime.UtcNow;
     public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 }

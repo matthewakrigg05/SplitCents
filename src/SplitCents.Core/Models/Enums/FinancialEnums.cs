@@ -1,6 +1,6 @@
 namespace SplitCents.Core.Models;
 
-public enum BillFrequency
+public enum TransactionFrequency
 {
     Monthly = 0,
     Weekly = 1,

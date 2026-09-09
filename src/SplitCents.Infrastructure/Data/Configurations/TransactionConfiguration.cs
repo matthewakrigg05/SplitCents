@@ -18,9 +18,6 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        builder.Property(t => t.category)
-            .HasMaxLength(100);
-
         builder.Property(t => t.notes)
             .HasMaxLength(1000);
 
@@ -28,5 +25,10 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
             .IsRequired();
 
         builder.HasIndex(t => new { t.userId, t.transactionDate });
+        builder.HasIndex(t => t.categoryId);
+
+        builder.HasDiscriminator<string>("transactionType")
+            .HasValue<Transaction>("Transaction")
+            .HasValue<RecurringTransaction>("RecurringTransaction");
     }
 }
