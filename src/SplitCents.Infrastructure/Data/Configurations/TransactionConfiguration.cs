@@ -27,6 +27,11 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.HasIndex(t => new { t.userId, t.transactionDate });
         builder.HasIndex(t => t.categoryId);
 
+        builder.HasOne<TransactionCategory>()
+            .WithMany()
+            .HasForeignKey(t => t.categoryId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         builder.HasDiscriminator<string>("transactionType")
             .HasValue<Transaction>("Transaction")
             .HasValue<RecurringTransaction>("RecurringTransaction");
