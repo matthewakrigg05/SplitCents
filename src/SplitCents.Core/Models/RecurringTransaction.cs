@@ -8,4 +8,6 @@ public class RecurringTransaction : Transaction
     public DateTime? endDate { get; set; }
     public SubscriptionStatus status { get; set; }
     public string provider { get; set; } = string.Empty;
+    public bool isPaid { get; set; }
+    public DateTime? paidOn { get; set; }
 }
