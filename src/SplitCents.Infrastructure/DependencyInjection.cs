@@ -27,6 +27,7 @@ public static class DependencyInjection
 
         // Scoped = one instance per HTTP request
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         return services;
