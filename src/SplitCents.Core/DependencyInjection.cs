@@ -13,6 +13,7 @@ public static class DependencyInjection
     {
         // Scoped = one instance per HTTP request
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITransactionService, TransactionService>();
 
         return services;
     }
