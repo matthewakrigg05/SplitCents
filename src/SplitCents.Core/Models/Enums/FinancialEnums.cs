@@ -4,7 +4,8 @@ public enum TransactionFrequency
 {
     Monthly = 0,
     Weekly = 1,
-    Annual = 2
+    Annual = 2, 
+    BiWeekly = 3
 }
 
 public enum SubscriptionStatus
