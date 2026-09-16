@@ -3,15 +3,23 @@ namespace SplitCents.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using SplitCents.Infrastructure.Data;
 using SplitCents.Infrastructure;
 using SplitCents.Core;
 using SplitCents.API.Middleware;
 using SplitCents.API.Services;
+using DotNetEnv;
 
 public class Program
 {
     public static void Main(string[] args)
     {
+
+        var envPath = Path.GetFullPath(
+        Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".env"));
+        Env.Load(envPath);
+
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddInfrastructure(builder.Configuration);
@@ -41,8 +49,17 @@ public class Program
 
         var app = builder.Build();
 
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider
+                .GetRequiredService<SplitCentsDbContext>();
+
+            db.Database.Migrate();
+        }
+
         // ExceptionMiddleware must be first so it catches exceptions from all subsequent middleware.
         app.UseMiddleware<ExceptionMiddleware>();
+
         // UseAuthentication must come before UseAuthorization.
         app.UseAuthentication();
         app.UseAuthorization();

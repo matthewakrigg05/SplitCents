@@ -26,7 +26,7 @@ public class UserService : IUserService
         UserValidator.ValidatePassword(password);
         
         // Normalise before uniqueness checks and storage so email matching is case-insensitive.
-        string normalisedEmail = email.ToLowerInvariant();
+        string normalisedEmail = email.Trim().ToLowerInvariant();
 
         if (await _users.GetByEmailAsync(normalisedEmail) != null)
             throw new ValidationException("Email is already in use.");
@@ -36,15 +36,12 @@ public class UserService : IUserService
 
         var hashedPassword = _passwordHasher.HashPassword(password);
 
-        var userToReg = new User
-        {
-            id = Guid.NewGuid(),
-            email = normalisedEmail,
-            hashedPassword = hashedPassword,
-            displayName = displayName,
-            firstName = firstName ?? string.Empty,
-            lastName = lastName ?? string.Empty
-        };
+        var userToReg = User.Create(
+            email: normalisedEmail,
+            displayName: displayName,
+            hashedPassword: hashedPassword,
+            firstName: firstName,
+            lastName: lastName);
 
         await _users.AddAsync(userToReg);
 

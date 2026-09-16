@@ -4,7 +4,8 @@ public enum TransactionFrequency
 {
     Monthly = 0,
     Weekly = 1,
-    Annual = 2
+    Annual = 2, 
+    BiWeekly = 3
 }
 
 public enum SubscriptionStatus
@@ -20,10 +21,4 @@ public enum TransactionType
     Income = 0,
     Expense = 1,
     Transfer = 2
-}
-
-public enum BudgetAllocationType
-{
-    FixedAmount = 0,
-    PercentageOfIncome = 1
 }

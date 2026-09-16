@@ -2,6 +2,7 @@ namespace SplitCents.Core.Models;
 
 public class RecurringTransaction : Transaction
 {
+    public Guid recurringTransactionId { get; set; }
     public TransactionFrequency frequency { get; set; }
     public DateTime nextTransactionDate { get; set; }
     public DateTime? startDate { get; set; }
