@@ -36,7 +36,12 @@ public class UserService : IUserService
 
         var hashedPassword = _passwordHasher.HashPassword(password);
 
-        var userToReg = User.Create(normalisedEmail, hashedPassword, displayName, firstName, lastName);
+        var userToReg = User.Create(
+            email: normalisedEmail,
+            displayName: displayName,
+            hashedPassword: hashedPassword,
+            firstName: firstName,
+            lastName: lastName);
 
         await _users.AddAsync(userToReg);
 
