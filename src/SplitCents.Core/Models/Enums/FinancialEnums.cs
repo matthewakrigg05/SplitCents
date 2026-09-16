@@ -22,9 +22,3 @@ public enum TransactionType
     Expense = 1,
     Transfer = 2
 }
-
-public enum BudgetAllocationType
-{
-    FixedAmount = 0,
-    PercentageOfIncome = 1
-}
